@@ -81,7 +81,8 @@
             android:gravity="center_horizontal"
             android:inputType="numberDecimal"
             android:text="0"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:focusable="false"/>
     </LinearLayout>
 
     <LinearLayout
@@ -107,7 +108,8 @@
             android:gravity="center_horizontal"
             android:inputType="numberDecimal"
             android:text="0"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:focusable="false"/>
     </LinearLayout>
 
     <LinearLayout
@@ -133,7 +135,8 @@
             android:gravity="center_horizontal"
             android:inputType="numberDecimal"
             android:text="0"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:focusable="false"/>
     </LinearLayout>
 
     <LinearLayout
@@ -209,7 +212,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Ширина ворот"
-            android:enabled="false"/>
+            android:enabled="false" />
 
         <EditText
             android:id="@+id/etGateWidth"
@@ -219,7 +222,8 @@
             android:gravity="center_horizontal"
             android:inputType="numberDecimal"
             android:text="4"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:focusable="false"/>
     </LinearLayout>
 
     <LinearLayout

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case 1:
                 startActivity(new Intent(this, PriceActivity.class));
                 break;
@@ -47,11 +47,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         etNumSides = findViewById(R.id.etNumSides);
         etNumSides.setOnFocusChangeListener(this);
-
         etSide1 = findViewById(R.id.etSide1);
+        etSide1.setOnFocusChangeListener(this);
         etSide2 = findViewById(R.id.etSide2);
+        etSide2.setOnFocusChangeListener(this);
         etSide3 = findViewById(R.id.etSide3);
+        etSide3.setOnFocusChangeListener(this);
         etSide4 = findViewById(R.id.etSide4);
+        etSide4.setOnFocusChangeListener(this);
         etSectionLength = findViewById(R.id.etSectionLength);
         etGateWidth = findViewById(R.id.etGateWidth);
 
@@ -78,16 +81,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnGetResult:
                 Intent intent = new Intent(this, ResultActivity.class);
                 intent.putExtra("numSides", Integer.parseInt(etNumSides.getText().toString()));
-                intent.putExtra("side1", Float.parseFloat(etSide1.getText().toString()));
-                intent.putExtra("side2", Float.parseFloat(etSide2.getText().toString()));
-                intent.putExtra("side3", Float.parseFloat(etSide3.getText().toString()));
-                intent.putExtra("side4", Float.parseFloat(etSide4.getText().toString()));
+                try {
+                    intent.putExtra("side1", Float.parseFloat(etSide1.getText().toString()));
+                    intent.putExtra("side2", Float.parseFloat(etSide2.getText().toString()));
+                    intent.putExtra("side3", Float.parseFloat(etSide3.getText().toString()));
+                    intent.putExtra("side4", Float.parseFloat(etSide4.getText().toString()));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this, "Введите все длины сторон", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 intent.putExtra("isClosedFence", isClosedFence);
                 intent.putExtra("sectionLength", Float.parseFloat(etSectionLength.getText().toString()));
                 intent.putExtra("hasDoor", hasDoor);
@@ -100,43 +109,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onFocusChange(View view, boolean hasFocus) {
         try {
-            switch (view.getId()) {
-                case R.id.etNumSides:
-                    if (!hasFocus) {
+            //Проверяем длину сторон при потере фокуса
+            if (!hasFocus) {
+                switch (view.getId()) {
+                    case R.id.etNumSides:
+                        //Проверяем и отключаем лишние поля при заданном количестве сторон
                         switch (Integer.valueOf(etNumSides.getText().toString())) {
                             case 1:
                                 etSide2.setEnabled(false);
+                                etSide2.setFocusable(false);
+                                etSide2.setText("0");
                                 tvSide2.setEnabled(false);
                                 etSide3.setEnabled(false);
+                                etSide3.setFocusable(false);
+                                etSide3.setText("0");
                                 tvSide3.setEnabled(false);
                                 etSide4.setEnabled(false);
+                                etSide4.setFocusable(false);
+                                etSide4.setText("0");
                                 tvSide4.setEnabled(false);
                                 swClosedFence.setEnabled(false);
                                 break;
                             case 2:
                                 etSide2.setEnabled(true);
+                                etSide2.setFocusableInTouchMode(true);
                                 tvSide2.setEnabled(true);
                                 etSide3.setEnabled(false);
+                                etSide3.setFocusable(false);
+                                etSide3.setText("0");
                                 tvSide3.setEnabled(false);
                                 etSide4.setEnabled(false);
+                                etSide4.setFocusable(false);
+                                etSide4.setText("0");
                                 tvSide4.setEnabled(false);
                                 swClosedFence.setEnabled(false);
                                 break;
                             case 3:
                                 etSide2.setEnabled(true);
+                                etSide2.setFocusableInTouchMode(true);
                                 tvSide2.setEnabled(true);
                                 etSide3.setEnabled(true);
+                                etSide3.setFocusableInTouchMode(true);
                                 tvSide3.setEnabled(true);
                                 etSide4.setEnabled(false);
+                                etSide4.setFocusable(false);
+                                etSide4.setText("0");
                                 tvSide4.setEnabled(false);
                                 swClosedFence.setEnabled(true);
                                 break;
                             case 4:
                                 etSide2.setEnabled(true);
+                                etSide2.setFocusableInTouchMode(true);
                                 tvSide2.setEnabled(true);
                                 etSide3.setEnabled(true);
+                                etSide3.setFocusableInTouchMode(true);
                                 tvSide3.setEnabled(true);
                                 etSide4.setEnabled(true);
+                                etSide4.setFocusableInTouchMode(true);
                                 tvSide4.setEnabled(true);
                                 swClosedFence.setEnabled(true);
                                 break;
@@ -144,8 +173,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Toast.makeText(this, "Введите количество сторон, от 1 до 4", Toast.LENGTH_SHORT).show();
                                 break;
                         }
-                    }
-
+                }
+            } //Проферяем длины сторон при получении фокуса
+            else {
+                switch (view.getId()) {
+                    case R.id.etSide1:
+                        //очищаем поле, если длина стороны равна нулю
+                        if (etSide1.getText().toString().equals("0")) {
+                            etSide1.getText().clear();
+                        }
+                        break;
+                    case R.id.etSide2:
+                        if (etSide2.getText().toString().equals("0")) {
+                            etSide2.getText().clear();
+                        }
+                        break;
+                    case R.id.etSide3:
+                        if (etSide3.getText().toString().equals("0")) {
+                            etSide3.getText().clear();
+                        }
+                        break;
+                    case R.id.etSide4:
+                        if (etSide4.getText().toString().equals("0")) {
+                            etSide4.getText().clear();
+                        }
+                        break;
+                }
             }
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Введите количество сторон, от 1 до 4", Toast.LENGTH_SHORT).show();
@@ -164,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.swGate:
                 hasGate = isChecked;
+                etGateWidth.setFocusableInTouchMode(isChecked);
                 etGateWidth.setEnabled(isChecked);
                 tvGateWidth.setEnabled(isChecked);
                 break;
