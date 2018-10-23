@@ -14,7 +14,7 @@ public class ResultActivity extends AppCompatActivity {
     SharedPreferences preferences;
 
     TextView tvNum60x60, tvNum80x80, tvNum40x20, tvNumProfSheet, tvSum60x60, tvSum80x80, tvSum40x20,
-            tvSumProfSheet, tvSum;
+            tvSumProfSheet, tvSum, tvHeader;
 
     private int numSides, num60x60 = 0, num80x80 = 0, num40x20 = 0, numProfSheet = 0;
     protected float side1, side2, side3, side4, sectionLength, length40x20, fenceLength, sum60x60, sum80x80, sum40x20,
@@ -27,6 +27,7 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        //находим элементы
         tvNum60x60 = findViewById(R.id.tvNum60x60);
         tvNum80x80 = findViewById(R.id.tvNum80x80);
         tvNum40x20 = findViewById(R.id.tvNum40x20);
@@ -38,7 +39,9 @@ public class ResultActivity extends AppCompatActivity {
         tvSumProfSheet = findViewById(R.id.tvSumProfSheet);
         tvSum = findViewById(R.id.tvSum);
 
+        tvHeader = findViewById(R.id.tvHeader);
 
+        //Получаем Extra из Intent
         Intent intent = getIntent();
         numSides = intent.getIntExtra("numSides", 1);
         side1 = intent.getFloatExtra("side1", 0);
@@ -51,16 +54,17 @@ public class ResultActivity extends AppCompatActivity {
         hasGate = intent.getBooleanExtra("hasGate", false);
         gateWidth = intent.getFloatExtra("gateWidth", 0);
 
-
+        // Устанавливаем заголовок
         fenceLength = side1 + side2 + side3 + side4;
+        tvHeader.setText("Расчёт ограждения из профнастила длиной "+fenceLength+" м.");
 
         preferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
 
 
-        tvNum60x60.setText(calc60х60() + "шт.");
-        tvNum80x80.setText(calc80х80() + "шт.");
-        tvNum40x20.setText(calc40х20() + "шт.");
-        tvNumProfSheet.setText(calcProfSheet() + " листов");
+        tvNum60x60.setText(calc60х60() + " шт.");
+        tvNum80x80.setText(calc80х80() + " шт.");
+        tvNum40x20.setText(calc40х20() + " шт.");
+        tvNumProfSheet.setText(calcProfSheet() + " шт.");
 
         sum60x60 = calc60х60() * Float.parseFloat(preferences.getString(PRICE_60x60, ""));
         sum80x80 = calc80х80() * Float.parseFloat(preferences.getString(PRICE_80x80, ""));
