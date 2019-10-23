@@ -33,10 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 1:
-                startActivity(new Intent(this, PriceActivity.class));
-                break;
+        if (item.getItemId() == 1) {
+            startActivity(new Intent(this, PriceActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -86,25 +84,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnGetResult:
-                Intent intent = new Intent(this, ResultActivity.class);
-                intent.putExtra("numSides", Integer.parseInt(etNumSides.getText().toString()));
-                try {
-                    intent.putExtra("side1", Float.parseFloat(etSide1.getText().toString()));
-                    intent.putExtra("side2", Float.parseFloat(etSide2.getText().toString()));
-                    intent.putExtra("side3", Float.parseFloat(etSide3.getText().toString()));
-                    intent.putExtra("side4", Float.parseFloat(etSide4.getText().toString()));
-                } catch (NumberFormatException e) {
-                    Toast.makeText(this, "Введите все длины сторон", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                intent.putExtra("isClosedFence", isClosedFence);
-                intent.putExtra("sectionLength", Float.parseFloat(etSectionLength.getText().toString()));
-                intent.putExtra("hasDoor", hasDoor);
-                intent.putExtra("hasGate", hasGate);
-                intent.putExtra("gateWidth", Float.parseFloat(etGateWidth.getText().toString()));
-                startActivity(intent);
+        if (view.getId() == R.id.btnGetResult) {
+            Intent intent = new Intent(this, ResultActivity.class);
+            intent.putExtra("numSides", Integer.parseInt(etNumSides.getText().toString()));
+            try {
+                intent.putExtra("side1", Float.parseFloat(etSide1.getText().toString()));
+                intent.putExtra("side2", Float.parseFloat(etSide2.getText().toString()));
+                intent.putExtra("side3", Float.parseFloat(etSide3.getText().toString()));
+                intent.putExtra("side4", Float.parseFloat(etSide4.getText().toString()));
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Введите все длины сторон", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            intent.putExtra("isClosedFence", isClosedFence);
+            intent.putExtra("sectionLength", Float.parseFloat(etSectionLength.getText().toString()));
+            intent.putExtra("hasDoor", hasDoor);
+            intent.putExtra("hasGate", hasGate);
+            intent.putExtra("gateWidth", Float.parseFloat(etGateWidth.getText().toString()));
+            startActivity(intent);
         }
     }
 

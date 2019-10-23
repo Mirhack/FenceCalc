@@ -2,12 +2,15 @@ package com.example.fencecalc;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import static com.example.fencecalc.PriceActivity.*;
+import static com.example.fencecalc.PriceActivity.PREFERENCES;
+import static com.example.fencecalc.PriceActivity.PRICE_40x20;
+import static com.example.fencecalc.PriceActivity.PRICE_60x60;
+import static com.example.fencecalc.PriceActivity.PRICE_80x80;
+import static com.example.fencecalc.PriceActivity.PRICE_PROF_SHEET;
 
 
 public class ResultActivity extends AppCompatActivity {
@@ -66,10 +69,10 @@ public class ResultActivity extends AppCompatActivity {
         tvNum40x20.setText(calc40х20() + " шт.");
         tvNumProfSheet.setText(calcProfSheet() + " шт.");
 
-        sum60x60 = calc60х60() * Float.parseFloat(preferences.getString(PRICE_60x60, ""));
-        sum80x80 = calc80х80() * Float.parseFloat(preferences.getString(PRICE_80x80, ""));
-        sum40x20 = calc40х20() * Float.parseFloat(preferences.getString(PRICE_40x20, ""));
-        sumProfSheet = calcProfSheet() * Float.parseFloat(preferences.getString(PRICE_PROF_SHEET, ""));
+        sum60x60 = calc60х60() * Float.parseFloat(preferences.getString(PRICE_60x60, "1"));
+        sum80x80 = calc80х80() * Float.parseFloat(preferences.getString(PRICE_80x80, "1"));
+        sum40x20 = calc40х20() * Float.parseFloat(preferences.getString(PRICE_40x20, "1"));
+        sumProfSheet = calcProfSheet() * Float.parseFloat(preferences.getString(PRICE_PROF_SHEET, "1"));
 
         tvSum60x60.setText(String.valueOf(sum60x60) + " руб.");
         tvSum80x80.setText(String.valueOf(sum80x80) + " руб.");
